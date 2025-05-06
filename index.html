@@ -71,27 +71,6 @@
       background: #f0f0f0;
       border-radius: 8px;
     }
-
-    #parent-dashboard,
-    #teacher-dashboard,
-    #world-selector {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      z-index: 101;
-      display: none;
-    }
-
-    #world-selector button {
-      display: block;
-      width: 100%;
-      margin: 4px 0;
-    }
   </style>
 </head>
 <body>
@@ -121,30 +100,6 @@
 
 <canvas id="game"></canvas>
 
-<!-- UI Panels -->
-<div id="world-selector">
-  <h3>🌍 Choose Your World</h3>
-  <button onclick="loadWorld('space')">🚀 Space Explorers</button>
-  <button onclick="loadWorld('ocean')">🐬 Ocean Adventure</button>
-  <button onclick="loadWorld('medieval')">🏰 Medieval Kingdom</button>
-  <button onclick="loadWorld('future')">🤖 Future City</button>
-  <button onclick="loadWorld('rainforest')">🌱 Rainforest Rescue</button>
-</div>
-
-<div id="parent-dashboard">
-  <h2>👨‍👩‍👧 Parent Dashboard</h2>
-  <label><input type="checkbox" checked> Enable 60-minute session limit</label><br>
-  <label><input type="checkbox" checked> Allow private multiplayer</label><br>
-  <button onclick="saveSettings()">Save</button>
-</div>
-
-<div id="teacher-dashboard">
-  <h2>👩‍🏫 Classroom Mode</h2>
-  <select><option>Grade 2 - Class A</option></select><br><br>
-  <button onclick="assignQuest('math_bridge')">🧮 Bridge Builder Quest</button><br>
-  <button onclick="assignQuest('weather_station')">🌦 Weather Station Quest</button>
-</div>
-
 <script type="module">
   import * as THREE from 'https://unpkg.com/three@0.157.0/build/three.module.js';
 
@@ -163,7 +118,7 @@
 
   // Ground
   const groundGeo = new THREE.BoxGeometry(32, 1, 32);
-  const groundMat = new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load("https://i.imgur.com/TY6Tc6w.png") });
+  const groundMat = new THREE.MeshStandardMaterial({ color: 0x228B22 });
   const ground = new THREE.Mesh(groundGeo, groundMat);
   ground.position.y = -0.5;
   scene.add(ground);
@@ -195,7 +150,13 @@
 
   // Mouse Look
   let yaw = 0, pitch = 0;
+  let isMouseDown = false;
+
+  document.addEventListener('mousedown', () => isMouseDown = true);
+  document.addEventListener('mouseup', () => isMouseDown = false);
+
   document.addEventListener('mousemove', e => {
+    if (!isMouseDown) return;
     yaw -= e.movementX * 0.002;
     pitch -= e.movementY * 0.002;
     pitch = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitch));
@@ -216,7 +177,6 @@
     const hit = getBlockInFront();
     if (hit && hit.object !== player) {
       scene.remove(hit.object);
-      playSound('remove_block');
     }
   });
 
@@ -226,44 +186,12 @@
     if (hit) {
       const box = new THREE.Mesh(
         new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load(getBlockTexture(selectedBlockType)) })
+        new THREE.MeshStandardMaterial({ color: 0x888888 })
       );
       box.position.copy(hit.point).add(hit.face.normal).divideScalar(1).floor().addScalar(0.5);
       scene.add(box);
-      playSound('place_grass');
     }
   });
-
-  function getBlockTexture(type) {
-    switch (type) {
-      case 'grass': return "https://i.imgur.com/TY6Tc6w.png";
-      case 'dirt': return "https://i.imgur.com/QBbGzQk.png";
-      case 'wood': return "https://i.imgur.com/k7IrtV0.png";
-      default: return "https://i.imgur.com/TY6Tc6w.png";
-    }
-  }
-
-  function playSound(name) {
-    const sounds = {
-      place_grass: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
-      remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
-    };
-    const audio = new Audio(sounds[name]);
-    audio.play();
-  }
-
-  function loadWorld(theme) {
-    alert("🌍 Loading world: " + theme);
-    document.body.style.backgroundImage = "url('https://i.imgur.com/XhHrJpX.jpg')";
-  }
-
-  function saveSettings() {
-    alert("✅ Settings saved!");
-  }
-
-  function assignQuest(questId) {
-    alert("🧩 Assigned quest: " + questId);
-  }
 
   // Animate
   function animate() {
@@ -292,29 +220,7 @@ document.querySelectorAll(".tool").forEach(tool => {
     selectedBlockType = tool.dataset.type;
   });
 });
-
-function showDashboard(id) {
-  document.getElementById(id).style.display = "block";
-}
-
-function hideDashboard(id) {
-  document.getElementById(id).style.display = "none";
-}
 </script>
 
-<!-- Manifest for PWA Support -->
-<link rel="manifest" href="data:application/manifest+json;charset=utf-8," +
-  encodeURIComponent(JSON.stringify({
-    name: "KiddoVerse",
-    short_name: "KiddoVerse",
-    start_url: "/",
-    display: "standalone",
-    background_color: "#87CEEB",
-    theme_color: "#ffffff",
-    icons: [
-      { src: "https://i.imgur.com/TY6Tc6w.png", sizes: "192x192", type: "image/png" },
-      { src: "https://i.imgur.com/TY6Tc6w.png", sizes: "512x512", type: "image/png" }
-    ]
-  })) 
-/>
-</head>
+</body>
+</html>
