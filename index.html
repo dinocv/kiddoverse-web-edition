@@ -131,7 +131,13 @@ document.querySelectorAll(".emoji").forEach(emoji => {
     <div class="slot">Dirt x64</div>
     <div class="slot">Wood x16</div>
   </div>
+<button onclick="startQuest()">🧩 Start Quest</button>
 
+<script>
+function startQuest() {
+  alert("Welcome to the Bridge Builder Quest!\n\nPlace 4 blocks every 2 meters to cross the river.");
+}
+</script>
   <!-- Parent Dashboard -->
   <div id="parent-dashboard">
     <h2>Parent Dashboard</h2>
@@ -157,7 +163,24 @@ function saveSettings() {
     <button onclick="assignQuest('math_bridge')">Assign Bridge Builder Quest</button><br>
     <button onclick="assignQuest('weather_station')">Assign Weather Quest</button>
   </div>
+<button onclick="openTeacherDashboard()">👨‍🏫 Classroom Mode</button>
 
+<div id="teacher-dashboard" style="display:none;">
+  <h2>Teacher Dashboard</h2>
+  <select><option>Grade 2 - Class A</option></select><br><br>
+  <button onclick="assignQuest('math_bridge')">Assign Bridge Builder Quest</button><br>
+  <button onclick="assignQuest('weather_station')">Assign Weather Quest</button>
+</div>
+
+<script>
+function openTeacherDashboard() {
+  document.getElementById("teacher-dashboard").style.display = "block";
+}
+
+function assignQuest(questId) {
+  alert("Assigned quest: " + questId);
+}
+</script>
   <!-- Canvas -->
   <canvas id="game"></canvas>
 
