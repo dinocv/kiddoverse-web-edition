@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>KiddoVerse - Build, Learn, Play!</title>
+  <link rel="manifest" href="manifest.json">
   <style>
     body {
       margin: 0;
@@ -71,6 +72,27 @@
       background: #f0f0f0;
       border-radius: 8px;
     }
+
+    #parent-dashboard,
+    #teacher-dashboard,
+    #world-selector {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 101;
+      display: none;
+    }
+
+    #world-selector button {
+      display: block;
+      width: 100%;
+      margin: 4px 0;
+    }
   </style>
 </head>
 <body>
@@ -100,6 +122,30 @@
 
 <canvas id="game"></canvas>
 
+<!-- UI Panels -->
+<div id="world-selector">
+  <h3>🌍 Choose Your World</h3>
+  <button onclick="loadWorld('space')">🚀 Space Explorers</button>
+  <button onclick="loadWorld('ocean')">🐬 Ocean Adventure</button>
+  <button onclick="loadWorld('medieval')">🏰 Medieval Kingdom</button>
+  <button onclick="loadWorld('future')">🤖 Future City</button>
+  <button onclick="loadWorld('rainforest')">🌱 Rainforest Rescue</button>
+</div>
+
+<div id="parent-dashboard">
+  <h2>👨‍👩‍👧 Parent Dashboard</h2>
+  <label><input type="checkbox" checked> Enable 60-minute session limit</label><br>
+  <label><input type="checkbox" checked> Allow private multiplayer</label><br>
+  <button onclick="saveSettings()">Save</button>
+</div>
+
+<div id="teacher-dashboard">
+  <h2>👩‍🏫 Classroom Mode</h2>
+  <select><option>Grade 2 - Class A</option></select><br><br>
+  <button onclick="assignQuest('math_bridge')">🧮 Bridge Builder Quest</button><br>
+  <button onclick="assignQuest('weather_station')">🌦 Weather Station Quest</button>
+</div>
+
 <script type="module">
   import * as THREE from 'https://unpkg.com/three@0.157.0/build/three.module.js';
 
@@ -118,7 +164,7 @@
 
   // Ground
   const groundGeo = new THREE.BoxGeometry(32, 1, 32);
-  const groundMat = new THREE.MeshStandardMaterial({ color: 0x228B22 });
+  const groundMat = new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load("https://i.imgur.com/TY6Tc6w.png") });
   const ground = new THREE.Mesh(groundGeo, groundMat);
   ground.position.y = -0.5;
   scene.add(ground);
@@ -186,12 +232,33 @@
     if (hit) {
       const box = new THREE.Mesh(
         new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshStandardMaterial({ color: 0x888888 })
+        new THREE.MeshStandardMaterial({ map: new THREE.TextureLoader().load(getBlockTexture(selectedBlockType)) })
       );
       box.position.copy(hit.point).add(hit.face.normal).divideScalar(1).floor().addScalar(0.5);
       scene.add(box);
     }
   });
+
+  function getBlockTexture(type) {
+    switch (type) {
+      case 'grass': return "https://i.imgur.com/TY6Tc6w.png";
+      case 'dirt': return "https://i.imgur.com/QBbGzQk.png";
+      case 'wood': return "https://i.imgur.com/k7IrtV0.png";
+      default: return "https://i.imgur.com/TY6Tc6w.png";
+    }
+  }
+
+  function loadWorld(theme) {
+    alert("🌍 Loading world: " + theme);
+  }
+
+  function saveSettings() {
+    alert("✅ Settings saved!");
+  }
+
+  function assignQuest(questId) {
+    alert("🧩 Assigned quest: " + questId);
+  }
 
   // Animate
   function animate() {
@@ -222,5 +289,22 @@ document.querySelectorAll(".tool").forEach(tool => {
 });
 </script>
 
-</body>
-</html>
+<!-- Manifest JSON (Embedded) -->
+<script>
+const manifest = {
+  name: "KiddoVerse",
+  short_name: "KiddoVerse",
+  start_url: "/",
+  display: "standalone",
+  background_color: "#87CEEB",
+  theme_color: "#ffffff",
+  icons: [
+    { src: "https://i.imgur.com/TY6Tc6w.png", sizes: "192x192", type: "image/png" },
+    { src: "https://i.imgur.com/TY6Tc6w.png", sizes: "512x512", type: "image/png" }
+  ]
+};
+
+const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+const manifestURL = URL.createObjectURL(blob);
+document.querySelector('link[rel="manifest"]').setAttribute('href', manifestURL);
+</script>
