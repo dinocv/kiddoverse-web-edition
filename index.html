@@ -110,6 +110,14 @@ function loadWorld(theme) {
   </div>
 
   <div id="chat">
+    <script>
+document.querySelectorAll(".emoji").forEach(emoji => {
+  emoji.addEventListener("click", () => {
+    const message = emoji.dataset.message;
+    alert("You sent: " + message); // Later replaced with real chat
+  });
+});
+</script>
     <div class="emoji" data-message="😊">😊</div>
     <div class="emoji" data-message="👍">👍</div>
     <div class="emoji" data-message="🎉">🎉</div>
