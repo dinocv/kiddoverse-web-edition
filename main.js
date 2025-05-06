@@ -1,4 +1,13 @@
+function playSound(name) {
+  const sounds = {
+    place_grass: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
+    remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
+  };
+  const audio = new Audio(sounds[name]);
+  audio.play();
+}
 // Block placement logic
+playSound("place_grass");
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 camera.position.set(0, 5, 10);
