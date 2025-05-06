@@ -139,6 +139,16 @@ document.querySelectorAll(".emoji").forEach(emoji => {
     <label><input type="checkbox" checked> Allow private multiplayer</label><br>
     <button onclick="saveSettings()">Save</button>
   </div>
+  <script>
+function saveSettings() {
+  const timeLimit = document.querySelector("#parent-dashboard input[type=checkbox]").checked;
+  if (timeLimit) {
+    setTimeout(() => {
+      alert("⏰ Session time is up!");
+    }, 60000); // 60 seconds
+  }
+}
+</script>
 
   <!-- Teacher Dashboard -->
   <div id="teacher-dashboard">
