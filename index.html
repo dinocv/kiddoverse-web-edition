@@ -87,6 +87,21 @@
 <body>
   <!-- UI Panels -->
   <div id="ui">
+    <div id="world-selector">
+  <h3>🌍 Choose Your World</h3>
+  <button onclick="loadWorld('space')">🚀 Space Explorers</button>
+  <button onclick="loadWorld('ocean')">🐬 Ocean Adventure</button>
+  <button onclick="loadWorld('medieval')">🏰 Medieval Kingdom</button>
+  <button onclick="loadWorld('future')">🤖 Future City</button>
+  <button onclick="loadWorld('rainforest')">🌿 Rainforest Rescue</button>
+</div>
+
+<script>
+function loadWorld(theme) {
+  alert("Loading " + theme + " world...");
+  // This will later change textures, blocks, and environment
+}
+</script>
     <div id="toolbar">
       <div class="tool selected" data-type="grass">Grass</div>
       <div class="tool" data-type="dirt">Dirt</div>
