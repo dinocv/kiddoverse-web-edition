@@ -120,4 +120,10 @@ const sounds = {
 };
 const audio = new Audio(sounds["place_block"]);
 audio.play();
+const textureLoader = new THREE.TextureLoader();
+const groundTexture = textureLoader.load("https://kenney.nl/assets/ground-texture.png");
+player.position.set(0, 1, 0); // Ensures player is above ground
+camera.position.set(0, 5, 15); // Better camera view
+camera.lookAt(scene.position);
+
 
