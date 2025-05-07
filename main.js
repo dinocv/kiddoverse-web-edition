@@ -1,83 +1,36 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js';
+import * as BABYLON from 'https://cdn.jsdelivr.net/npm/babylonjs@latest/babylon.js';
 
-// 🎮 Setup Scene, Camera, Renderer
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(0, 5, 10);
+// 🎮 Setup Babylon.js Engine
+const canvas = document.getElementById("gameCanvas");
+const engine = new BABYLON.Engine(canvas, true);
+const scene = new BABYLON.Scene(engine);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+// 📷 Camera Setup
+const camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 4, 10, BABYLON.Vector3.Zero(), scene);
+camera.attachControl(canvas, true);
 
-// 💡 Lighting & Shadows
-const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-scene.add(ambientLight);
+// 💡 Lighting
+const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+light.intensity = 0.7;
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-directionalLight.position.set(5, 10, 5);
-scene.add(directionalLight);
+// 🌍 Ground
+const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 10, height: 10 }, scene);
+const groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
+groundMaterial.diffuseTexture = new BABYLON.Texture("https://kenney.nl/assets/ground-texture.png", scene);
+ground.material = groundMaterial;
 
-// 🌍 Ground Texture
-const textureLoader = new THREE.TextureLoader();
-const groundTexture = textureLoader.load("https://kenney.nl/assets/ground-texture.png");
-const groundGeo = new THREE.BoxGeometry(32, 1, 32);
-const groundMat = new THREE.MeshStandardMaterial({ map: groundTexture });
-const ground = new THREE.Mesh(groundGeo, groundMat);
-ground.position.y = -0.5;
-scene.add(ground);
+// 🏗 Player Object
+const player = BABYLON.MeshBuilder.CreateBox("player", { size: 1 }, scene);
+player.position.y = 1;
+player.material = new BABYLON.StandardMaterial("playerMaterial", scene);
+player.material.diffuseColor = new BABYLON.Color3(1, 1, 0); // Yellow
 
-// 🏗 Player Object (Fixing Missing Player)
-let player = new THREE.Mesh(
-    new THREE.BoxGeometry(0.8, 1.6, 0.8),
-    new THREE.MeshStandardMaterial({ color: 0xffcc00 })
-);
-player.position.set(0, 1, 0);
-scene.add(player);
-
-// 🎯 Modular Block Placement (LEGO-Style)
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-
-function getBlockInFront() {
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(scene.children, false);
-    return intersects.length > 0 ? intersects[0] : null;
-}
-
-// 🏗 Block Placement
-document.addEventListener('contextmenu', e => {
-    e.preventDefault();
-    const hit = getBlockInFront();
-    if (hit) {
-        const box = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 1, 1),
-            new THREE.MeshStandardMaterial({ color: 0x888888 })
-        );
-        box.position.copy(hit.point).add(hit.face.normal).divideScalar(1).floor().addScalar(0.5);
-        scene.add(box);
-    }
+// 🎮 Start Game Loop
+engine.runRenderLoop(() => {
+    scene.render();
 });
 
-// 🎵 Sound Effects
-function playSound(name) {
-    const sounds = {
-        place_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
-        remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
-    };
-    if (sounds[name]) {
-        const audio = new Audio(sounds[name]);
-        audio.play();
-    }
-}
-
-// 🏗 Play Sound on Block Placement
-document.addEventListener('contextmenu', () => {
-    playSound("place_block");
+// Resize Handling
+window.addEventListener("resize", () => {
+    engine.resize();
 });
-
-// 🎮 Start Animation Loop
-function animate() {
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-}
-animate();
