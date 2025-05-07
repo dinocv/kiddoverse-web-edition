@@ -109,19 +109,19 @@
   <h3>🌍 Choose Your World</h3>
   <button onclick="loadWorld('candy')">🍬 Candy World</button>
   <button onclick="loadWorld('farm')">🏡 Farm World</button>
-  <button onclick="loadWorld('desert')">🏜️ Desert World</button>
-  <button onclick="loadWorld('winter')">❄️ Winter World</button>
+  <button onclick="loadWorld('desert')">🏜 Desert World</button>
+  <button onclick="loadWorld('winter')">❄ Winter World</button>
   <button onclick="loadWorld('space')">🚀 Space World</button>
   <button onclick="loadWorld('ocean')">🌊 Ocean World</button>
   <button onclick="loadWorld('medieval')">🏰 Medieval World</button>
-  <button onclick="loadWorld('future')">🏙️ Future City</button>
+  <button onclick="loadWorld('future')">🏙 Future City</button>
 </div>
 
 <div id="character-selector" class="panel">
   <h3>🧍 Choose Your Skin</h3>
   <button onclick="changeSkin('astronaut')">🚀 Astronaut</button>
   <button onclick="changeSkin('farmer')">🌾 Farmer</button>
-  <button onclick="changeSkin('knight')">🛡️ Knight</button>
+  <button onclick="changeSkin('knight')">🛡 Knight</button>
   <button onclick="changeSkin('robot')">🤖 Robot</button>
 </div>
 
@@ -253,15 +253,23 @@
   function changeSkin(skin) {
     const skins = {
       astronaut: 0x0099ff,
-      farmer: 0xffaa00,
-      knight: 0xffff00,
-      robot: 0x87CEEB
+      farmer: 0x8B4513,
+      knight: 0xcd7f32,
+      robot: 0x888888
     };
 
     if (skins[skin]) {
       player.material.color.set(skins[skin]);
       alert("🧍 Changed skin to: " + skin);
     }
+  }
+
+  function showDashboard(id) {
+    document.getElementById(id).style.display = "block";
+  }
+
+  function hideDashboard(id) {
+    document.getElementById(id).style.display = "none";
   }
 
   // Animate
