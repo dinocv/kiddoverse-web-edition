@@ -68,7 +68,6 @@
     }
 
     #chatbox {
-      display: block;
       height: 150px;
       overflow-y: auto;
     }
@@ -82,16 +81,22 @@
 
     #voice-control {
       position: absolute;
-      bottom: 10px;
-      right: 10px;
-      z-index: 100;
-    }
-
-    #remote-controls {
-      position: fixed;
       bottom: 60px;
       right: 10px;
       z-index: 100;
+      background: rgba(255,255,255,0.95);
+      padding: 10px;
+      border-radius: 12px;
+    }
+
+    #remote-controls {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      padding: 10px;
+      border-radius: 12px;
     }
   </style>
 </head>
@@ -115,7 +120,7 @@
 <!-- Chat Box -->
 <div id="chat">
   <div id="chatbox"></div>
-  <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="handleChatInput(event)" />
+  <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="handleChatInput(event)" /><br>
   <div class="emoji-chat" data-message="😊">😊</div>
   <div class="emoji-chat" data-message="👍">👍</div>
   <div class="emoji-chat" data-message="🎉">🎉</div>
@@ -280,15 +285,6 @@
     }
   }
 
-  function playSound(name) {
-    const sounds = {
-      place_grass: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
-      remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
-    };
-    const audio = new Audio(sounds[name]);
-    audio.play();
-  }
-
   function loadWorld(theme) {
     const backgrounds = {
       space: "https://i.imgur.com/XhHrJpX.jpg",
@@ -371,6 +367,7 @@ document.querySelectorAll(".tool").forEach(tool => {
 <!-- Chat System -->
 <script>
 const chatbox = document.getElementById("chatbox");
+
 function handleChatInput(e) {
   if (e.key === "Enter") {
     const input = document.getElementById("chat-input");
@@ -403,7 +400,6 @@ function sanitize(input) {
 <!-- Voice Chat -->
 <script>
 let localStream = null;
-let remoteVideo = null;
 
 async function toggleVoiceChat() {
   if (!localStream) {
@@ -478,5 +474,6 @@ link.rel = 'manifest';
 link.href = manifestURL;
 document.head.appendChild(link);
 </script>
+
 </body>
 </html>
