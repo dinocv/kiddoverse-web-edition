@@ -34,6 +34,47 @@ let player = new THREE.Mesh(
 player.position.set(0, 1, 0);
 scene.add(player);
 
+// 🎯 Modular Block Placement (LEGO-Style)
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+function getBlockInFront() {
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(scene.children, false);
+    return intersects.length > 0 ? intersects[0] : null;
+}
+
+// 🏗 Block Placement
+document.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    const hit = getBlockInFront();
+    if (hit) {
+        const box = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 1, 1),
+            new THREE.MeshStandardMaterial({ color: 0x888888 })
+        );
+        box.position.copy(hit.point).add(hit.face.normal).divideScalar(1).floor().addScalar(0.5);
+        scene.add(box);
+    }
+});
+
+// 🎵 Sound Effects
+function playSound(name) {
+    const sounds = {
+        place_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
+        remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
+    };
+    if (sounds[name]) {
+        const audio = new Audio(sounds[name]);
+        audio.play();
+    }
+}
+
+// 🏗 Play Sound on Block Placement
+document.addEventListener('contextmenu', () => {
+    playSound("place_block");
+});
+
 // 🎮 Start Animation Loop
 function animate() {
     requestAnimationFrame(animate);
