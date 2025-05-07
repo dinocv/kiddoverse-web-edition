@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <title>KiddoVerse - Build, Learn, Play!</title>
-  <link rel="manifest" href="manifest.json">
   <style>
     body {
       margin: 0;
@@ -17,6 +16,19 @@
       display: block;
       width: 100vw;
       height: 100vh;
+    }
+
+    .panel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 100;
+      display: none;
     }
 
     #ui {
@@ -55,48 +67,11 @@
       margin: 4px;
       cursor: pointer;
     }
-
-    #inventory-panel {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 10px;
-      border-radius: 12px;
-      z-index: 100;
-    }
-
-    .slot {
-      padding: 6px;
-      margin: 4px;
-      background: #f0f0f0;
-      border-radius: 8px;
-    }
-
-    #parent-dashboard,
-    #teacher-dashboard,
-    #world-selector {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      z-index: 101;
-      display: none;
-    }
-
-    #world-selector button {
-      display: block;
-      width: 100%;
-      margin: 4px 0;
-    }
   </style>
 </head>
 <body>
 
+<!-- UI Panels -->
 <div id="ui">
   <div id="toolbar">
     <div class="tool selected" data-type="grass">🌿 Grass</div>
@@ -113,17 +88,24 @@
   <div class="emoji" data-message="🚀">🚀</div>
 </div>
 
-<div id="inventory-panel">
-  <h3>🎒 Inventory</h3>
-  <div class="slot">🌿 Grass x32</div>
-  <div class="slot">🧱 Dirt x64</div>
-  <div class="slot">🪵 Wood x16</div>
-</div>
-
 <canvas id="game"></canvas>
 
-<!-- UI Panels -->
-<div id="world-selector">
+<!-- System Panels -->
+<div id="parent-dashboard" class="panel">
+  <h2>👨‍👩‍👧 Parent Dashboard</h2>
+  <label><input type="checkbox" checked> Enable 60-minute session limit</label><br>
+  <label><input type="checkbox" checked> Allow private multiplayer</label><br>
+  <button onclick="saveSettings()">Save</button>
+</div>
+
+<div id="teacher-dashboard" class="panel">
+  <h2>👩‍🏫 Classroom Mode</h2>
+  <select><option>Grade 2 - Class A</option></select><br><br>
+  <button onclick="assignQuest('math_bridge')">🧮 Bridge Builder Quest</button><br>
+  <button onclick="assignQuest('weather_station')">🌦 Weather Station Quest</button>
+</div>
+
+<div id="world-selector" class="panel">
   <h3>🌍 Choose Your World</h3>
   <button onclick="loadWorld('space')">🚀 Space Explorers</button>
   <button onclick="loadWorld('ocean')">🐬 Ocean Adventure</button>
@@ -132,18 +114,11 @@
   <button onclick="loadWorld('rainforest')">🌱 Rainforest Rescue</button>
 </div>
 
-<div id="parent-dashboard">
-  <h2>👨‍👩‍👧 Parent Dashboard</h2>
-  <label><input type="checkbox" checked> Enable 60-minute session limit</label><br>
-  <label><input type="checkbox" checked> Allow private multiplayer</label><br>
-  <button onclick="saveSettings()">Save</button>
-</div>
-
-<div id="teacher-dashboard">
-  <h2>👩‍🏫 Classroom Mode</h2>
-  <select><option>Grade 2 - Class A</option></select><br><br>
-  <button onclick="assignQuest('math_bridge')">🧮 Bridge Builder Quest</button><br>
-  <button onclick="assignQuest('weather_station')">🌦 Weather Station Quest</button>
+<div id="character-selector" class="panel">
+  <h3>🧍 Choose Your Skin</h3>
+  <button onclick="changeSkin('astronaut')">🚀 Astronaut</button>
+  <button onclick="changeSkin('pirate')">🏴‍☠️ Pirate</button>
+  <button onclick="changeSkin('scientist')">🧪 Scientist</button>
 </div>
 
 <script type="module">
@@ -223,6 +198,7 @@
     const hit = getBlockInFront();
     if (hit && hit.object !== player) {
       scene.remove(hit.object);
+      playSound('remove_block');
     }
   });
 
@@ -236,6 +212,7 @@
       );
       box.position.copy(hit.point).add(hit.face.normal).divideScalar(1).floor().addScalar(0.5);
       scene.add(box);
+      playSound('place_grass');
     }
   });
 
@@ -248,6 +225,15 @@
     }
   }
 
+  function playSound(name) {
+    const sounds = {
+      place_grass: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
+      remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
+    };
+    const audio = new Audio(sounds[name]);
+    audio.play();
+  }
+
   function loadWorld(theme) {
     alert("🌍 Loading world: " + theme);
   }
@@ -258,6 +244,27 @@
 
   function assignQuest(questId) {
     alert("🧩 Assigned quest: " + questId);
+  }
+
+  function changeSkin(skin) {
+    const skins = {
+      astronaut: 0x0099ff,
+      pirate: 0xffaa00,
+      scientist: 0xffff00
+    };
+
+    if (skins[skin]) {
+      player.material.color.set(skins[skin]);
+      alert("🧍 Changed skin to: " + skin);
+    }
+  }
+
+  function showDashboard(id) {
+    document.getElementById(id).style.display = "block";
+  }
+
+  function hideDashboard(id) {
+    document.getElementById(id).style.display = "none";
   }
 
   // Animate
@@ -289,7 +296,7 @@ document.querySelectorAll(".tool").forEach(tool => {
 });
 </script>
 
-<!-- Manifest JSON (Embedded) -->
+<!-- Manifest JSON -->
 <script>
 const manifest = {
   name: "KiddoVerse",
@@ -308,3 +315,6 @@ const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
 const manifestURL = URL.createObjectURL(blob);
 document.querySelector('link[rel="manifest"]').setAttribute('href', manifestURL);
 </script>
+
+</body>
+</html>
