@@ -114,3 +114,10 @@ function animate() {
     renderer.render(scene, camera);
 }
 animate();
+const sounds = {
+    place_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
+    remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
+};
+const audio = new Audio(sounds["place_block"]);
+audio.play();
+
