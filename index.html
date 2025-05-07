@@ -242,9 +242,22 @@
     alert("🌍 Loading world: " + theme);
   }
 
-  function saveSettings() {
-    alert("✅ Settings saved!");
-  }
+  function loadWorld(theme) {
+  const backgrounds = {
+    space: "https://i.imgur.com/space_world.jpg",
+    ocean: "https://i.imgur.com/ocean_world.jpg",
+    medieval: "https://i.imgur.com/medieval_world.jpg",
+    future: "https://i.imgur.com/future_city.jpg",
+    rainforest: "https://i.imgur.com/rainforest_world.jpg",
+    candy: "https://i.imgur.com/candy_world.jpg",
+    farm: "https://i.imgur.com/farm_world.jpg",
+    desert: "https://i.imgur.com/desert_world.jpg",
+    winter: "https://i.imgur.com/winter_world.jpg"
+  };
+
+  document.body.style.backgroundImage = `url('${backgrounds[theme]}')`;
+  alert("🌍 Loading world: " + theme);
+}
 
   function assignQuest(questId) {
     alert("🧩 Assigned quest: " + questId);
