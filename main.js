@@ -13,7 +13,7 @@ camera.attachControl(canvas, true);
 const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
 light.intensity = 0.7;
 
-// 🌍 Ground
+// 🌍 Ground Texture
 const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 10, height: 10 }, scene);
 const groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
 groundMaterial.diffuseTexture = new BABYLON.Texture("https://kenney.nl/assets/ground-texture.png", scene);
@@ -24,6 +24,18 @@ const player = BABYLON.MeshBuilder.CreateBox("player", { size: 1 }, scene);
 player.position.y = 1;
 player.material = new BABYLON.StandardMaterial("playerMaterial", scene);
 player.material.diffuseColor = new BABYLON.Color3(1, 1, 0); // Yellow
+
+// 🎯 Block Placement System
+const raycaster = new BABYLON.Ray();
+
+// 🏗 Block Placement
+document.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    const box = BABYLON.MeshBuilder.CreateBox("box", { size: 1 }, scene);
+    box.position.y = 1;
+    box.material = new BABYLON.StandardMaterial("boxMaterial", scene);
+    box.material.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+});
 
 // 🎮 Start Game Loop
 engine.runRenderLoop(() => {
