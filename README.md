@@ -1,6 +1,6 @@
 # KiddoVerse Web Edition
 
-A safe, creative, educational building game for kids aged 6–12 — built with HTML5, CSS, and JavaScript.
+A safe, creative, educational building game for kids aged 6–12 — inspired by LEGO, Minecraft, and Roblox.
 
 🎯 Features:
 - Browser-based (no download needed)
@@ -8,6 +8,8 @@ A safe, creative, educational building game for kids aged 6–12 — built with 
 - Emoji-only chat
 - Parental dashboard
 - Themed worlds (space, ocean, medieval, future city, rainforest)
+- STEM learning quests
+- Installable as an app
 
 🎮 How to Play:
 Open `index.html` in any modern browser.
