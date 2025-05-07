@@ -1,7 +1,7 @@
 {
   "name": "KiddoVerse",
   "short_name": "KiddoVerse",
-  "start_url": "./index.html",
+  "start_url": "/kiddoverse-web-edition/",
   "display": "standalone",
   "background_color": "#87CEEB",
   "theme_color": "#ffffff",
