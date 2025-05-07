@@ -107,18 +107,22 @@
 
 <div id="world-selector" class="panel">
   <h3>🌍 Choose Your World</h3>
-  <button onclick="loadWorld('space')">🚀 Space Explorers</button>
-  <button onclick="loadWorld('ocean')">🐬 Ocean Adventure</button>
-  <button onclick="loadWorld('medieval')">🏰 Medieval Kingdom</button>
-  <button onclick="loadWorld('future')">🤖 Future City</button>
-  <button onclick="loadWorld('rainforest')">🌱 Rainforest Rescue</button>
+  <button onclick="loadWorld('candy')">🍬 Candy World</button>
+  <button onclick="loadWorld('farm')">🏡 Farm World</button>
+  <button onclick="loadWorld('desert')">🏜️ Desert World</button>
+  <button onclick="loadWorld('winter')">❄️ Winter World</button>
+  <button onclick="loadWorld('space')">🚀 Space World</button>
+  <button onclick="loadWorld('ocean')">🌊 Ocean World</button>
+  <button onclick="loadWorld('medieval')">🏰 Medieval World</button>
+  <button onclick="loadWorld('future')">🏙️ Future City</button>
 </div>
 
 <div id="character-selector" class="panel">
   <h3>🧍 Choose Your Skin</h3>
   <button onclick="changeSkin('astronaut')">🚀 Astronaut</button>
-  <button onclick="changeSkin('pirate')">🏴‍☠️ Pirate</button>
-  <button onclick="changeSkin('scientist')">🧪 Scientist</button>
+  <button onclick="changeSkin('farmer')">🌾 Farmer</button>
+  <button onclick="changeSkin('knight')">🛡️ Knight</button>
+  <button onclick="changeSkin('robot')">🤖 Robot</button>
 </div>
 
 <script type="module">
@@ -249,8 +253,9 @@
   function changeSkin(skin) {
     const skins = {
       astronaut: 0x0099ff,
-      pirate: 0xffaa00,
-      scientist: 0xffff00
+      farmer: 0xffaa00,
+      knight: 0xffff00,
+      robot: 0x87CEEB
     };
 
     if (skins[skin]) {
