@@ -1,46 +1,82 @@
+/* style.css */
 body {
     margin: 0;
-    overflow: hidden;
-    background-color: #87CEEB;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
+    background-color: #f0f0f0; /* Light grey for the page background */
+    color: #333;
+    overflow-x: hidden; /* Prevent horizontal scrollbars */
 }
 
-canvas {
+header {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 20; /* Ensure header is above canvas if they overlap */
+}
+
+header h1 {
+    margin: 0.2em 0;
+    color: #2c3e50;
+}
+
+header p {
+    margin: 0.2em 0;
+    color: #7f8c8d;
+}
+
+main {
+    flex-grow: 1; /* Allows main content to fill available space */
+    display: flex;
+    justify-content: center; /* Center canvas horizontally */
+    align-items: center; /* Center canvas vertically if not full height */
+    padding: 10px; /* Some padding around the canvas area */
+    overflow: hidden; /* Prevent canvas from causing body scrollbars */
+}
+
+#gameCanvas {
     display: block;
-    width: 90vw;
-    height: 80vh;
-    border: 2px solid black;
+    /* Width and height will be set by JavaScript to be responsive */
+    /* but you can set a max-width/max-height here if needed */
+    /* max-width: 100%; */
+    /* max-height: calc(100vh - 150px); (Example: full height minus header and controls) */
+    border: 2px solid #3498db; /* A nice blue border */
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    background-color: #ecf0f1; /* Initial background for canvas element */
 }
 
-#menu {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px;
-    border-radius: 5px;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+.controls-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #34495e; /* Darker blue-grey */
+    padding: 12px 0;
+    box-sizing: border-box;
+    text-align: center;
+    z-index: 20; /* Ensure it's above other content */
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
 }
 
-#controls, #materials {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-
-button {
-    padding: 10px;
-    font-size: 14px;
+.controls-bar button {
+    margin: 0 6px;
+    padding: 10px 15px;
+    background-color: #3498db; /* Blue buttons */
+    color: white;
     border: none;
     border-radius: 5px;
-    background: #222;
-    color: white;
     cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.controls-bar button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+.controls-bar button:active {
+    background-color: #1f6392; /* Even darker when clicked */
 }
