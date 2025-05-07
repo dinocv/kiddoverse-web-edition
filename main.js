@@ -1,17 +1,4 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js';
-let testBox = new THREE.Mesh(
-    new THREE.BoxGeometry(2, 2, 2),
-    new THREE.MeshBasicMaterial({ color: 0xff0000 })
-    const sounds = {
-    place_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
-    remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
-};
-const audio = new Audio(sounds["place_block"]);
-audio.play();
-
-);
-testBox.position.set(0, 1, 0);
-scene.add(testBox);
 
 // 🎮 Setup Scene, Camera, Renderer
 const scene = new THREE.Scene();
@@ -36,6 +23,14 @@ const groundMat = new THREE.MeshStandardMaterial({ color: 0x228B22 });
 const ground = new THREE.Mesh(groundGeo, groundMat);
 ground.position.y = -0.5;
 scene.add(ground);
+
+// 🏗 Test Block (Red Cube)
+let testBox = new THREE.Mesh(
+    new THREE.BoxGeometry(2, 2, 2),
+    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+);
+testBox.position.set(0, 1, 0);
+scene.add(testBox);
 
 // 🏗 Player Object
 let player = new THREE.Mesh(
@@ -127,16 +122,3 @@ function animate() {
     renderer.render(scene, camera);
 }
 animate();
-const sounds = {
-    place_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
-    remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
-};
-const audio = new Audio(sounds["place_block"]);
-audio.play();
-const textureLoader = new THREE.TextureLoader();
-const groundTexture = textureLoader.load("https://kenney.nl/assets/ground-texture.png");
-player.position.set(0, 1, 0); // Ensures player is above ground
-camera.position.set(0, 5, 15); // Better camera view
-camera.lookAt(scene.position);
-
-
