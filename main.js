@@ -18,19 +18,13 @@ directionalLight.position.set(5, 10, 5);
 scene.add(directionalLight);
 
 // 🌍 Ground
+const textureLoader = new THREE.TextureLoader();
+const groundTexture = textureLoader.load("https://kenney.nl/assets/ground-texture.png");
 const groundGeo = new THREE.BoxGeometry(32, 1, 32);
-const groundMat = new THREE.MeshStandardMaterial({ color: 0x228B22 });
+const groundMat = new THREE.MeshStandardMaterial({ map: groundTexture });
 const ground = new THREE.Mesh(groundGeo, groundMat);
 ground.position.y = -0.5;
 scene.add(ground);
-
-// 🏗 Test Block (Red Cube)
-let testBox = new THREE.Mesh(
-    new THREE.BoxGeometry(2, 2, 2),
-    new THREE.MeshBasicMaterial({ color: 0xff0000 })
-);
-testBox.position.set(0, 1, 0);
-scene.add(testBox);
 
 // 🏗 Player Object
 let player = new THREE.Mesh(
@@ -57,15 +51,6 @@ document.addEventListener('keyup', e => {
     if (e.code === 'KeyD') moveRight = false;
 });
 
-// 🖱 Mouse Look
-let yaw = 0, pitch = 0;
-document.addEventListener('mousemove', e => {
-    yaw -= e.movementX * 0.002;
-    pitch -= e.movementY * 0.002;
-    pitch = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitch));
-    player.rotation.y = yaw;
-});
-
 // 🎯 Raycasting for Block Interaction
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -81,6 +66,7 @@ document.addEventListener('click', () => {
     const hit = getBlockInFront();
     if (hit && hit.object !== player) {
         scene.remove(hit.object);
+        playSound("remove_block");
     }
 });
 
@@ -94,6 +80,7 @@ document.addEventListener('contextmenu', e => {
         );
         box.position.copy(hit.point).add(hit.face.normal).divideScalar(1).floor().addScalar(0.5);
         scene.add(box);
+        playSound("place_block");
     }
 });
 
@@ -103,8 +90,10 @@ function playSound(name) {
         place_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
         remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
     };
-    const audio = new Audio(sounds[name]);
-    audio.play();
+    if (sounds[name]) {
+        const audio = new Audio(sounds[name]);
+        audio.play();
+    }
 }
 
 // 🏗 Animated World
