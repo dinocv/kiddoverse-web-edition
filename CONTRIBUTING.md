@@ -1,13 +1,11 @@
 # Contributing to KiddoVerse
 
-Thank you for wanting to help make *KiddoVerse* better for kids around the world!
+Thank you for helping make *KiddoVerse* better for kids around the world!
 
-We welcome contributors of all ages and backgrounds.
-
-## Ways to Help
+We welcome contributions of all kinds:
 - Improve the game engine
 - Design new blocks and characters
-- Write fun quests and puzzles
+- Create fun quests and puzzles
 - Make the game safer and more educational
 - Translate the game into other languages
 
