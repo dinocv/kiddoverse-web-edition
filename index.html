@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kiddoverse - Web Edition</title>
+    <title>Kiddoverse - Genesis Build!</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Three.js Library (ensure this is the correct and latest version you want to use) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.min.js" integrity="sha512-339B498cfB345IOM3Sz3YyD9h3M2K3Qx91T87K45D4x9Xy3F/W33L8O7JdL3c05Hh3J5tN3h7W6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Link to your manifest for PWA features -->
     <link rel="manifest" href="manifest.json">
+
+    <!-- Three.js Library from JSDelivr CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.min.js"></script>
 </head>
 <body>
     <header>
         <h1>Welcome to Kiddoverse!</h1>
-        <p>Creative building awaits!</p>
+        <p>The Adventure Begins!</p>
     </header>
 
     <main>
@@ -21,16 +22,16 @@
     </main>
 
     <div class="controls-bar">
-        <button id="saveBtn">💾 Save</button>
-        <button id="forwardBtn">↑ Forward</button> <!-- These buttons are placeholders for now -->
-        <button id="leftBtn">← Left</button>
-        <button id="backBtn">↓ Back</button>
-        <button id="rightBtn">→ Right</button>
-        <button id="grassBtn">🌿 Grass</button>
-        <button id="dirtBtn">🧱 Dirt</button>
-        <button id="woodBtn">🪵 Wood</button>
+        <!-- Buttons are placeholders for future functionality -->
+        <button id="saveBtn" title="Save your creation (coming soon!)">💾 Save</button>
+        <button id="selectBlockBtn_Grass" title="Select Grass Block (coming soon!)">🌿 Grass</button>
+        <button id="selectBlockBtn_Dirt" title="Select Dirt Block (coming soon!)">🧱 Dirt</button>
+        <button id="selectBlockBtn_Wood" title="Select Wood Block (coming soon!)">🪵 Wood</button>
+        <button id="undoBtn" title="Undo last action (coming soon!)">↩️ Undo</button>
+        <button id="resetViewBtn" title="Reset Camera View (coming soon!)">🔄 Reset View</button>
     </div>
 
+    <!-- Your game logic -->
     <script src="main.js"></script>
 </body>
 </html>
