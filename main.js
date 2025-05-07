@@ -2,6 +2,13 @@ import * as THREE from 'https://cdn.jsdelivr.net/npm/three@latest/build/three.mo
 let testBox = new THREE.Mesh(
     new THREE.BoxGeometry(2, 2, 2),
     new THREE.MeshBasicMaterial({ color: 0xff0000 })
+    const sounds = {
+    place_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
+    remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
+};
+const audio = new Audio(sounds["place_block"]);
+audio.play();
+
 );
 testBox.position.set(0, 1, 0);
 scene.add(testBox);
