@@ -1,4 +1,10 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js';
+let testBox = new THREE.Mesh(
+    new THREE.BoxGeometry(2, 2, 2),
+    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+);
+testBox.position.set(0, 1, 0);
+scene.add(testBox);
 
 // 🎮 Setup Scene, Camera, Renderer
 const scene = new THREE.Scene();
