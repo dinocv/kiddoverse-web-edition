@@ -26,22 +26,13 @@ const ground = new THREE.Mesh(groundGeo, groundMat);
 ground.position.y = -0.5;
 scene.add(ground);
 
-// 🎵 Sound Effects
-function playSound(name) {
-    const sounds = {
-        place_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_3c8bcdfb9d.mp3",
-        remove_block: "https://cdn.pixabay.com/audio/2022/03/15/audio_5f8fdfb7c5.mp3"
-    };
-    if (sounds[name]) {
-        const audio = new Audio(sounds[name]);
-        audio.play();
-    }
-}
-
-// 🏗 Block Placement
-document.addEventListener('click', () => {
-    playSound("place_block");
-});
+// 🏗 Player Object (Fixing Missing Player)
+let player = new THREE.Mesh(
+    new THREE.BoxGeometry(0.8, 1.6, 0.8),
+    new THREE.MeshStandardMaterial({ color: 0xffcc00 })
+);
+player.position.set(0, 1, 0);
+scene.add(player);
 
 // 🎮 Start Animation Loop
 function animate() {
