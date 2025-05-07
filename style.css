@@ -1,80 +1,15 @@
 body {
-  margin: 0;
-  overflow: hidden;
-  font-family: 'Nunito', sans-serif;
-  background: #87CEEB;
-  color: #333;
+    margin: 0;
+    overflow: hidden;
+    background-color: #87CEEB;
 }
 
 canvas {
-  display: block;
-  width: 100vw;
-  height: 100vh;
+    display: block;
+    width: 100vw;
+    height: 100vh;
 }
 
-#ui {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 10px;
-  border-radius: 12px;
-}
-
-.tool {
-  display: inline-block;
-  padding: 8px 12px;
-  margin: 4px;
-  background: #eee;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.tool.selected {
-  background: #ffd700;
-}
-
-#chat {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-}
-
-.emoji {
-  display: inline-block;
-  font-size: 24px;
-  margin: 4px;
-  cursor: pointer;
-}
-
-#inventory-panel {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 10px;
-  border-radius: 12px;
-}
-
-.slot {
-  padding: 6px;
-  margin: 4px;
-  background: #f0f0f0;
-  border-radius: 8px;
-}
-
-#parent-dashboard, #teacher-dashboard {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
-  z-index: 100;
-  display: none;
-}
 #menu {
     position: absolute;
     bottom: 10px;
@@ -98,4 +33,3 @@ button {
     background: #222;
     color: white;
 }
-
