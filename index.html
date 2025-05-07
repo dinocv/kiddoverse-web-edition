@@ -85,7 +85,7 @@
   <div class="emoji" data-message="👍">👍</div>
   <div class="emoji" data-message="🎉">🎉</div>
   <div class="emoji" data-message="❤️">❤️</div>
-  <div class="emoji" data-message="🚀">🚀</div>
+  <div class="emoji" data-type="rocket">🚀</div>
 </div>
 
 <canvas id="game"></canvas>
@@ -247,11 +247,11 @@
 
   function loadWorld(theme) {
     const backgrounds = {
-      space: "https://i.imgur.com/space_world.jpg",
-      ocean: "https://i.imgur.com/ocean_world.jpg",
-      medieval: "https://i.imgur.com/medieval_world.jpg",
-      future: "https://i.imgur.com/future_city.jpg",
-      rainforest: "https://i.imgur.com/rainforest_world.jpg",
+      space: "https://i.imgur.com/XhHrJpX.jpg",
+      ocean: "https://i.imgur.com/cOqF0gE.jpg",
+      medieval: "https://i.imgur.com/tC3lMxU.jpg",
+      future: "https://i.imgur.com/6VWzGyR.jpg",
+      rainforest: "https://i.imgur.com/jTQZqNw.jpg",
       candy: "https://i.imgur.com/candy_world.jpg",
       farm: "https://i.imgur.com/farm_world.jpg",
       desert: "https://i.imgur.com/desert_world.jpg",
@@ -284,6 +284,17 @@
     }
   }
 
+  function saveBuild() {
+    localStorage.setItem("my_saved_build", JSON.stringify(scene.toJSON()));
+    alert("💾 Build saved locally!");
+  }
+
+  function shareBuild() {
+    const buildData = localStorage.getItem("my_saved_build");
+    const url = `https://dinocv.github.io/kiddoverse-web-edition?build=${encodeURIComponent(buildData)}`;
+    prompt("🔗 Copy this link to share your build:", url);
+  }
+
   // Animate
   function animate(time) {
     requestAnimationFrame(animate);
@@ -312,43 +323,3 @@ document.querySelectorAll(".tool").forEach(tool => {
   });
 });
 </script>
-
-<!-- UGC Functions -->
-<script>
-function saveBuild() {
-  localStorage.setItem("my_saved_build", JSON.stringify(scene.toJSON()));
-  alert("💾 Build saved locally!");
-}
-
-function shareBuild() {
-  const buildData = localStorage.getItem("my_saved_build");
-  const url = `https://dinocv.github.io/kiddoverse-web-edition?build=${encodeURIComponent(buildData)}`;
-  prompt("🔗 Copy this link to share your build:", url);
-}
-</script>
-
-<!-- Manifest JSON -->
-<script>
-const manifest = {
-  name: "KiddoVerse",
-  short_name: "KiddoVerse",
-  start_url: "/",
-  display: "standalone",
-  background_color: "#87CEEB",
-  theme_color: "#ffffff",
-  icons: [
-    { src: "https://i.imgur.com/TY6Tc6w.png", sizes: "192x192", type: "image/png" },
-    { src: "https://i.imgur.com/TY6Tc6w.png", sizes: "512x512", type: "image/png" }
-  ]
-};
-
-const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-const manifestURL = URL.createObjectURL(blob);
-const link = document.createElement('link');
-link.rel = 'manifest';
-link.href = manifestURL;
-document.head.appendChild(link);
-</script>
-
-</body>
-</html>
