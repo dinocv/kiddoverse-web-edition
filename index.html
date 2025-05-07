@@ -329,6 +329,18 @@ const manifest = {
   ]
 };
 
+  function saveBuild() {
+  localStorage.setItem("my_saved_build", JSON.stringify(scene.toJSON()));
+  alert("💾 Build saved locally!");
+}
+<button onclick="saveBuild()">💾 Save My Build</button>
+<button onclick="shareBuild()">🔗 Share My Build</button>
+function shareBuild() {
+  const buildData = localStorage.getItem("my_saved_build");
+  const url = `https://dinocv.github.io/kiddoverse-web-edition?build=${encodeURIComponent(buildData)}`;
+  prompt("🔗 Copy this link to share your build:", url);
+}
+  
 const blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
 const manifestURL = URL.createObjectURL(blob);
 const link = document.createElement('link');
