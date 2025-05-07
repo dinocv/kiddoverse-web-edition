@@ -10,14 +10,23 @@ function initThreeJS() {
 
     // 1. Check if Three.js is loaded
     if (typeof THREE === 'undefined') {
-        console.error("[INIT_ERROR] THREE.js library is NOT loaded. Cannot proceed.");
-        document.getElementById('gameCanvas').style.backgroundColor = 'red'; // Visual error indication
-        const errorMsg = document.createElement('p');
-        errorMsg.textContent = 'Error: 3D Library (THREE.js) failed to load. Check console (F12).';
-        errorMsg.style.color = 'white';
-        errorMsg.style.textAlign = 'center';
-        errorMsg.style.padding = '20px';
-        document.getElementById('gameCanvas').parentNode.insertBefore(errorMsg, document.getElementById('gameCanvas').nextSibling);
+        console.error("[INIT_ERROR] THREE.js library is NOT loaded. Check the script tag in index.html.");
+        // Visual error indication on canvas
+        const canvas = document.getElementById('gameCanvas');
+        if (canvas) {
+            canvas.style.backgroundColor = 'red';
+            const errorMsg = document.createElement('p');
+            errorMsg.textContent = 'Error: 3D Library (THREE.js) failed to load. Check console (F12).';
+            errorMsg.style.color = 'white';
+            errorMsg.style.position = 'absolute';
+            errorMsg.style.top = '50%';
+            errorMsg.style.left = '50%';
+            errorMsg.style.transform = 'translate(-50%, -50%)';
+            errorMsg.style.backgroundColor = 'rgba(0,0,0,0.7)';
+            errorMsg.style.padding = '10px';
+            errorMsg.style.borderRadius = '5px';
+            canvas.parentNode.insertBefore(errorMsg, canvas.nextSibling);
+        }
         return; // Stop initialization
     }
     console.log(`[INIT] THREE.js Version: ${THREE.REVISION} loaded successfully.`);
@@ -35,7 +44,7 @@ function initThreeJS() {
         0.1,  // Near clipping plane
         1000  // Far clipping plane
     );
-    camera.position.set(2, 2.5, 4); // Positioned to see the origin and cube
+    camera.position.set(1.5, 2.5, 4); // Positioned to see the origin and cube
     camera.lookAt(0, 0.5, 0);      // Looking at the center of where the cube will be
     console.log(`[INIT] PerspectiveCamera created. Position: (${camera.position.x}, ${camera.position.y}, ${camera.position.z})`);
 
@@ -77,11 +86,11 @@ function initThreeJS() {
     scene.add(axesHelper);
     console.log("[INIT] AxesHelper added to scene.");
 
-    // Add event listener for window resize
+    // Event Listener for window resize
     window.addEventListener('resize', onWindowResize, false);
     console.log("[INIT] Window resize event listener attached.");
 
-    // Initial call to set canvas size and render
+    // Initial Setup Calls
     onWindowResize(); // Set initial size
     animate(); // Start the rendering loop
     console.log("[INIT] Initial canvas size set and animation loop started. Kiddoverse Genesis Block should be visible!");
@@ -98,17 +107,20 @@ function onWindowResize() {
 
     const headerElem = document.querySelector('header');
     const controlsBarElem = document.querySelector('.controls-bar');
-    
+
     let availableHeight = window.innerHeight;
     if (headerElem) availableHeight -= headerElem.offsetHeight;
     if (controlsBarElem) availableHeight -= controlsBarElem.offsetHeight;
-    
-    // Define padding for the main content area around the canvas
-    const mainPadding = 30; // e.g., 15px top + 15px bottom from main's padding in CSS
-    availableHeight -= mainPadding;
 
-    let newWidth = canvas.parentNode.clientWidth - mainPadding; // Get width from main container, minus padding
-    newWidth = Math.min(newWidth, 1600); // Max sensible width
+    // Define padding for the main content area around the canvas
+    const mainPaddingVertical = 30; // Total vertical padding (e.g., 15px top + 15px bottom)
+    const mainPaddingHorizontal = 30; // Total horizontal padding
+
+    availableHeight -= mainPaddingVertical;
+
+    // Calculate available width based on parent container (main)
+    let newWidth = canvas.parentNode.clientWidth - mainPaddingHorizontal;
+    newWidth = Math.min(newWidth, 1800); // Max sensible width
     newWidth = Math.max(newWidth, 300); // Min sensible width
 
     let newHeight = availableHeight;
@@ -117,7 +129,7 @@ function onWindowResize() {
     // Apply dimensions to canvas style (for display)
     canvas.style.width = `${newWidth}px`;
     canvas.style.height = `${newHeight}px`;
-    
+
     // Update camera aspect ratio
     camera.aspect = newWidth / newHeight;
     camera.updateProjectionMatrix();
@@ -125,16 +137,15 @@ function onWindowResize() {
     // Update renderer drawing buffer size
     renderer.setSize(newWidth, newHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // For crisp rendering on high DPI
-    
+
     console.log(`[RESIZE] Canvas display set to: ${newWidth}px x ${newHeight}px. Renderer buffer updated.`);
-    // No immediate render call here, animate loop handles it
 }
 
 // Function for the animation/rendering loop
 function animate() {
-    requestAnimationFrame(animate); // Schedule the next frame
+    requestAnimationFrame(animate);
 
-    // Optional: Animate the cube
+    // Animation for the cube
     if (cube) {
         cube.rotation.x += 0.004;
         cube.rotation.y += 0.006;
