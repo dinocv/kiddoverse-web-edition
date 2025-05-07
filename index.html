@@ -71,6 +71,12 @@
 </head>
 <body>
 
+<!-- UGC Buttons -->
+<div id="ugc-tools" style="position: absolute; bottom: 10px; right: 10px; z-index: 100;">
+  <button onclick="saveBuild()">💾 Save My Build</button>
+  <button onclick="shareBuild()">🔗 Share My Build</button>
+</div>
+
 <!-- UI Panels -->
 <div id="ui">
   <div id="toolbar">
@@ -124,12 +130,6 @@
   <button onclick="changeSkin('farmer')">🌾 Farmer</button>
   <button onclick="changeSkin('knight')">🛡 Knight</button>
   <button onclick="changeSkin('robot')">🤖 Robot</button>
-</div>
-
-<!-- UGC Buttons -->
-<div id="ugc-tools" style="position: absolute; bottom: 10px; right: 10px; z-index: 100;">
-  <button onclick="saveBuild()">💾 Save My Build</button>
-  <button onclick="shareBuild()">🔗 Share My Build</button>
 </div>
 
 <script type="module">
@@ -324,8 +324,9 @@ document.querySelectorAll(".tool").forEach(tool => {
 });
 </script>
 
-<!-- UGC & PWA Scripts -->
+<!-- UGC & Manifest Scripts -->
 <script>
+// UGC Functions
 function saveBuild() {
   localStorage.setItem("my_saved_build", JSON.stringify(scene.toJSON()));
   alert("💾 Build saved locally!");
@@ -336,10 +337,8 @@ function shareBuild() {
   const url = `https://dinocv.github.io/kiddoverse-web-edition?build=${encodeURIComponent(buildData)}`;
   prompt("🔗 Copy this link to share your build:", url);
 }
-</script>
 
-<!-- Manifest JSON -->
-<script>
+// Manifest JSON
 const manifest = {
   name: "KiddoVerse",
   short_name: "KiddoVerse",
@@ -360,6 +359,3 @@ link.rel = 'manifest';
 link.href = manifestURL;
 document.head.appendChild(link);
 </script>
-
-</body>
-</html>
