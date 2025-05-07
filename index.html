@@ -59,13 +59,39 @@
       bottom: 10px;
       left: 10px;
       z-index: 100;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px;
+      border-radius: 12px;
+      max-width: 300px;
+      max-height: 200px;
+      overflow-y: auto;
     }
 
-    .emoji {
+    #chatbox {
+      display: block;
+      height: 150px;
+      overflow-y: auto;
+    }
+
+    .emoji-chat {
       display: inline-block;
       font-size: 24px;
       margin: 4px;
       cursor: pointer;
+    }
+
+    #voice-control {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      z-index: 100;
+    }
+
+    #remote-controls {
+      position: fixed;
+      bottom: 60px;
+      right: 10px;
+      z-index: 100;
     }
   </style>
 </head>
@@ -86,15 +112,33 @@
   </div>
 </div>
 
+<!-- Chat Box -->
 <div id="chat">
-  <div class="emoji" data-message="😊">😊</div>
-  <div class="emoji" data-message="👍">👍</div>
-  <div class="emoji" data-message="🎉">🎉</div>
-  <div class="emoji" data-message="❤️">❤️</div>
-  <div class="emoji" data-message="🚀">🚀</div>
+  <div id="chatbox"></div>
+  <input type="text" id="chat-input" placeholder="Type a message..." onkeydown="handleChatInput(event)" />
+  <div class="emoji-chat" data-message="😊">😊</div>
+  <div class="emoji-chat" data-message="👍">👍</div>
+  <div class="emoji-chat" data-message="🎉">🎉</div>
+  <div class="emoji-chat" data-message="❤️">❤️</div>
+  <div class="emoji-chat" data-message="🚀">🚀</div>
 </div>
 
 <canvas id="game"></canvas>
+
+<!-- Voice Control Panel -->
+<div id="voice-control">
+  <h3>🎤 Voice Chat</h3>
+  <button onclick="toggleVoiceChat()">🎙️ Toggle Voice Chat</button>
+</div>
+
+<!-- Remote Control Panel -->
+<div id="remote-controls">
+  <h3>🕹️ Remote Controls</h3>
+  <button onclick="moveRemote('forward')">⬆️ Forward</button><br>
+  <button onclick="moveRemote('back')">⬇️ Back</button><br>
+  <button onclick="moveRemote('left')">⬅️ Left</button>
+  <button onclick="moveRemote('right')">➡️ Right</button>
+</div>
 
 <!-- System Panels -->
 <div id="parent-dashboard" class="panel">
@@ -324,7 +368,81 @@ document.querySelectorAll(".tool").forEach(tool => {
 });
 </script>
 
-<!-- UGC Functions -->
+<!-- Chat System -->
+<script>
+const chatbox = document.getElementById("chatbox");
+function handleChatInput(e) {
+  if (e.key === "Enter") {
+    const input = document.getElementById("chat-input");
+    const msg = sanitize(input.value);
+    if (msg) {
+      addMessage(msg);
+      input.value = "";
+    }
+  }
+}
+
+function addMessage(text) {
+  const p = document.createElement("p");
+  p.textContent = `🧍 ${text}`;
+  chatbox.appendChild(p);
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+document.querySelectorAll(".emoji-chat").forEach(emoji => {
+  emoji.addEventListener("click", () => {
+    addMessage(emoji.dataset.message);
+  });
+});
+
+function sanitize(input) {
+  return input.replace(/[^\w\s\.\,\?\!]/gi, "").substring(0, 50);
+}
+</script>
+
+<!-- Voice Chat -->
+<script>
+let localStream = null;
+let remoteVideo = null;
+
+async function toggleVoiceChat() {
+  if (!localStream) {
+    try {
+      localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      alert("🎤 Voice chat enabled!");
+    } catch (err) {
+      alert("🚫 Voice chat denied.");
+      console.error(err);
+    }
+  } else {
+    localStream.getTracks().forEach(track => track.stop());
+    localStream = null;
+    alert("🔇 Voice chat disabled.");
+  }
+}
+</script>
+
+<!-- Remote Controls -->
+<script>
+function moveRemote(dir) {
+  switch (dir) {
+    case 'forward':
+      player.position.z -= 0.5;
+      break;
+    case 'back':
+      player.position.z += 0.5;
+      break;
+    case 'left':
+      player.position.x -= 0.5;
+      break;
+    case 'right':
+      player.position.x += 0.5;
+      break;
+  }
+}
+</script>
+
+<!-- UGC Features -->
 <script>
 function saveBuild() {
   localStorage.setItem("my_saved_build", JSON.stringify(scene.toJSON()));
@@ -360,6 +478,5 @@ link.rel = 'manifest';
 link.href = manifestURL;
 document.head.appendChild(link);
 </script>
-
 </body>
 </html>
