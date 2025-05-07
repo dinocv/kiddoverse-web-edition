@@ -109,12 +109,19 @@
 </div>
 
 <!-- UI Panels -->
-<div id="ui">
-  <div id="toolbar">
-    <div class="tool selected" data-type="grass">🌿 Grass</div>
-    <div class="tool" data-type="dirt">🧱 Dirt</div>
-    <div class="tool" data-type="wood">🪵 Wood</div>
-  </div>
+<div id="menu">
+    <button onclick="saveGame()">💾 Save</button>
+    <div id="controls">
+        <button onclick="move('up')">⬆ Forward</button>
+        <button onclick="move('left')">⬅ Left</button>
+        <button onclick="move('down')">⬇ Back</button>
+        <button onclick="move('right')">➡ Right</button>
+    </div>
+    <div id="materials">
+        <button onclick="selectMaterial('grass')">🌿 Grass</button>
+        <button onclick="selectMaterial('dirt')">🟤 Dirt</button>
+        <button onclick="selectMaterial('wood')">🪵 Wood</button>
+    </div>
 </div>
 
 <!-- Chat Box -->
