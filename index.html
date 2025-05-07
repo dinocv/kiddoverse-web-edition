@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KiddoVerse</title>
-    <link rel="stylesheet" href="styles/style.css">
-    <script src="scripts/main.js" defer></script>
+    
+    <!-- 🔗 Correctly Reference Styles & Manifest -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- 🔧 Ensure JavaScript Loads Properly -->
+    <script src="main.js" defer></script>
 </head>
 <body>
 
+    <!-- 🎮 Game Canvas for Babylon.js -->
     <canvas id="gameCanvas"></canvas>
 
+    <!-- 🏗 UI Menu for Controls & Building -->
     <div id="menu">
         <button onclick="saveGame()">💾 Save</button>
         <div id="controls">
