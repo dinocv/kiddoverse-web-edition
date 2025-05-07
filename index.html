@@ -3,35 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KiddoVerse</title>
-    
-    <!-- 🔗 Correctly Reference Styles & Manifest -->
+    <title>Kiddoverse - Web Edition</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Three.js Library (ensure this is the correct and latest version you want to use) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.164.1/three.min.js" integrity="sha512-339B498cfB345IOM3Sz3YyD9h3M2K3Qx91T87K45D4x9Xy3F/W33L8O7JdL3c05Hh3J5tN3h7W6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Link to your manifest for PWA features -->
     <link rel="manifest" href="manifest.json">
-
-    <!-- 🔧 Ensure JavaScript Loads Properly -->
-    <script src="main.js" defer></script>
 </head>
 <body>
+    <header>
+        <h1>Welcome to Kiddoverse!</h1>
+        <p>Creative building awaits!</p>
+    </header>
 
-    <!-- 🎮 Game Canvas for Babylon.js -->
-    <canvas id="gameCanvas"></canvas>
+    <main>
+        <canvas id="gameCanvas"></canvas>
+    </main>
 
-    <!-- 🏗 UI Menu for Controls & Building -->
-    <div id="menu">
-        <button onclick="saveGame()">💾 Save</button>
-        <div id="controls">
-            <button onclick="move('up')">⬆ Forward</button>
-            <button onclick="move('left')">⬅ Left</button>
-            <button onclick="move('down')">⬇ Back</button>
-            <button onclick="move('right')">➡ Right</button>
-        </div>
-        <div id="materials">
-            <button onclick="selectMaterial('grass')">🌿 Grass</button>
-            <button onclick="selectMaterial('dirt')">🟤 Dirt</button>
-            <button onclick="selectMaterial('wood')">🪵 Wood</button>
-        </div>
+    <div class="controls-bar">
+        <button id="saveBtn">💾 Save</button>
+        <button id="forwardBtn">↑ Forward</button> <!-- These buttons are placeholders for now -->
+        <button id="leftBtn">← Left</button>
+        <button id="backBtn">↓ Back</button>
+        <button id="rightBtn">→ Right</button>
+        <button id="grassBtn">🌿 Grass</button>
+        <button id="dirtBtn">🧱 Dirt</button>
+        <button id="woodBtn">🪵 Wood</button>
     </div>
 
+    <script src="main.js"></script>
 </body>
 </html>
