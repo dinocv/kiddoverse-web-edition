@@ -2,37 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kiddoverse - Genesis Block!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>KiddoVerse Web Edition - Themed Worlds!</title>
+    <meta name="description" content="Explore different themed worlds in KiddoVerse!">
+    <meta name="theme-color" content="#5E81AC"/>
     <link rel="stylesheet" href="style.css">
-    <!-- Link to your manifest for PWA features -->
     <link rel="manifest" href="manifest.json">
-
-    <!-- Three.js Library from JSDelivr CDN (v0.160.0 - Confirmed Working) -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-
+    <link rel="apple-touch-icon" href="assets/images/logo192.png">
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <header>
-        <h1>Welcome to Kiddoverse!</h1>
-        <p>The Adventure Begins!</p>
-    </header>
-
-    <main>
-        <canvas id="gameCanvas"></canvas>
-    </main>
-
-    <div class="controls-bar">
-        <!-- Buttons are placeholders for future functionality -->
-        <button id="saveBtn" title="Save your creation (coming soon!)">💾 Save</button>
-        <button id="selectBlockBtn_Grass" title="Select Grass Block (coming soon!)">🌿 Grass</button>
-        <button id="selectBlockBtn_Dirt" title="Select Dirt Block (coming soon!)">🧱 Dirt</button>
-        <button id="selectBlockBtn_Wood" title="Select Wood Block (coming soon!)">🪵 Wood</button>
-        <button id="undoBtn" title="Undo last action (coming soon!)">↩️ Undo</button>
-        <button id="resetViewBtn" title="Reset Camera View (coming soon!)">🔄 Reset View</button>
+    <div id="loading-screen">
+        <div id="loading-text">KiddoVerse Loading Worlds...</div>
+        <div id="progress-bar-container"><div id="progress-bar"></div></div>
     </div>
 
-    <!-- Your game logic -->
-    <script src="main.js"></script>
+    <div id="game-container"><canvas id="game-canvas"></canvas></div>
+
+    <div id="ui-container">
+        <div id="crosshair">+</div>
+
+        <!-- THEME SWITCHER - NEW -->
+        <div id="theme-selector-widget">
+            <button id="theme-default-button" class="theme-button" data-theme="DEFAULT">Default World</button>
+            <button id="theme-space-button" class="theme-button" data-theme="SPACE">Space World</button>
+            <!-- Add more theme buttons here as they are implemented -->
+        </div>
+
+        <div id="block-selector">
+            <div class="block-option active" data-block-type="plastic_red">Red Plastic</div>
+            <div class="block-option" data-block-type="grass">Grass</div>
+            <div class="block-option" data-block-type="dirt">Dirt</div>
+            <div class="block-option" data-block-type="stone">Stone</div>
+            <div class="block-option" data-block-type="moon_rock">Moon Rock</div> <!-- New Block Example -->
+            <div class="block-option" data-block-type="metal_panel">Metal Panel</div><!-- New Block Example -->
+        </div>
+        <div id="mobile-controls">
+            <div id="joystick-area"><div id="joystick-handle"></div></div>
+            <button id="jump-button">▲</button>
+            <button id="place-block-button">P</button>
+            <button id="remove-block-button">R</button>
+        </div>
+        <div id="chat-widget">
+             <!-- ... (chat widget HTML remains the same) ... -->
+            <div id="chat-toggle">💬 Chat</div>
+            <div id="chat-window" style="display:none;">
+                <div id="chat-messages"></div>
+                <div id="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Say something nice...">
+                    <button id="send-chat-button">Send</button>
+                    <div id="emoji-picker-button">😊</div>
+                    <div id="emoji-palette" style="display:none;">
+                        <span>😀</span><span>😂</span><span>😍</span><span>👍</span><span>🎉</span><span>💡</span><span>🧱</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="three.min.js"></script>
+    <script src="utils.js"></script>    
+    <script src="noise.js"></script>
+    <script src="blocks.js"></script>   
+    <script src="audio.js"></script>
+    <script src="world.js"></script>
+    <script src="player.js"></script>
+    <script src="controls.js"></script>
+    <script src="ui.js"></script> <!-- UI before Main for theme switcher setup -->
+    <script src="main.js"></script>      
 </body>
 </html>
