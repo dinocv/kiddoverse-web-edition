@@ -6,8 +6,8 @@
     <title>KiddoVerse Web Edition - Themed Worlds!</title>
     <meta name="description" content="Explore different themed worlds in KiddoVerse!">
     <meta name="theme-color" content="#5E81AC"/>
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css"> <!-- Root -->
+    <link rel="manifest" href="manifest.json"> <!-- Root -->
     <link rel="apple-touch-icon" href="assets/images/logo192.png">
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 </head>
@@ -21,21 +21,17 @@
 
     <div id="ui-container">
         <div id="crosshair">+</div>
-
-        <!-- THEME SWITCHER - NEW -->
         <div id="theme-selector-widget">
             <button id="theme-default-button" class="theme-button" data-theme="DEFAULT">Default World</button>
             <button id="theme-space-button" class="theme-button" data-theme="SPACE">Space World</button>
-            <!-- Add more theme buttons here as they are implemented -->
         </div>
-
         <div id="block-selector">
             <div class="block-option active" data-block-type="plastic_red">Red Plastic</div>
             <div class="block-option" data-block-type="grass">Grass</div>
             <div class="block-option" data-block-type="dirt">Dirt</div>
             <div class="block-option" data-block-type="stone">Stone</div>
-            <div class="block-option" data-block-type="moon_rock">Moon Rock</div> <!-- New Block Example -->
-            <div class="block-option" data-block-type="metal_panel">Metal Panel</div><!-- New Block Example -->
+            <div class="block-option" data-block-type="moon_rock">Moon Rock</div>
+            <div class="block-option" data-block-type="metal_panel">Metal Panel</div>
         </div>
         <div id="mobile-controls">
             <div id="joystick-area"><div id="joystick-handle"></div></div>
@@ -44,7 +40,6 @@
             <button id="remove-block-button">R</button>
         </div>
         <div id="chat-widget">
-             <!-- ... (chat widget HTML remains the same) ... -->
             <div id="chat-toggle">💬 Chat</div>
             <div id="chat-window" style="display:none;">
                 <div id="chat-messages"></div>
@@ -68,7 +63,7 @@
     <script src="world.js"></script>
     <script src="player.js"></script>
     <script src="controls.js"></script>
-    <script src="ui.js"></script> <!-- UI before Main for theme switcher setup -->
+    <script src="ui.js"></script>
     <script src="main.js"></script>      
 </body>
 </html>
