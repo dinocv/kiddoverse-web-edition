@@ -1,59 +1,132 @@
-/* ... (all previous styles from "Modern Lego Visual" phase remain) ... */
-
-/* NEW STYLES FOR THEME SELECTOR */
+/* KiddoVerse Base Styles - Modern Theme */
+body, html {
+    margin: 0; padding: 0; overflow: hidden;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #3B4252; color: #ECEFF4;
+    overscroll-behavior: none;
+}
+#game-container, #game-canvas { width: 100%; height: 100%; display: block; }
+#loading-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #2E3440; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; z-index: 1000;
+    color: #D8DEE9; font-size: 1.8em; text-align: center; padding: 20px;
+}
+#progress-bar-container {
+    width: 60%; max-width: 350px; height: 22px; background-color: #4C566A;
+    border-radius: 11px; margin-top: 20px; overflow: hidden;
+}
+#progress-bar {
+    width: 0%; height: 100%; background-color: #88C0D0;
+    border-radius: 11px; transition: width 0.15s ease-out;
+}
+#ui-container { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; }
+#crosshair {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-size: 22px; color: rgba(236, 239, 244, 0.8);
+    text-shadow: 0 0 3px rgba(46, 52, 64, 0.7); pointer-events: none;
+}
+/* Theme Selector */
 #theme-selector-widget {
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(59, 66, 82, 0.85); /* Nord dark blue, semi-transparent */
-    padding: 8px;
-    border-radius: 10px;
-    display: flex;
-    gap: 10px;
-    z-index: 20; /* Above other UI */
-    pointer-events: auto;
+    position: absolute; top: 15px; left: 50%; transform: translateX(-50%);
+    background-color: rgba(59, 66, 82, 0.85); padding: 8px; border-radius: 10px;
+    display: flex; gap: 10px; z-index: 20; pointer-events: auto;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
-
 .theme-button {
-    padding: 8px 15px;
-    background-color: #4C566A; /* Nord darker grey-blue */
-    color: #ECEFF4; /* Nord light text */
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: 'Segoe UI', 'Roboto', sans-serif;
-    font-weight: 500;
-    font-size: 0.9em;
-    transition: background-color 0.2s, transform 0.1s;
-    border: 2px solid transparent;
+    padding: 8px 15px; background-color: #4C566A; color: #ECEFF4;
+    border: none; border-radius: 6px; cursor: pointer;
+    font-family: 'Segoe UI', 'Roboto', sans-serif; font-weight: 500; font-size: 0.9em;
+    transition: background-color 0.2s, transform 0.1s; border: 2px solid transparent;
 }
-
-.theme-button:hover {
-    background-color: #5E81AC; /* Nord lighter blue */
-}
-
+.theme-button:hover { background-color: #5E81AC; }
 .theme-button.active-theme {
-    background-color: #88C0D0; /* Nord bright accent blue */
-    color: #2E3440; /* Nord darkest blue for text */
-    border-color: #D8DEE9; /* Nord light grey border */
-    transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(136, 192, 208, 0.4);
+    background-color: #88C0D0; color: #2E3440; border-color: #D8DEE9;
+    transform: scale(1.05); box-shadow: 0 0 10px rgba(136, 192, 208, 0.4);
 }
-
-/* Adjustments for mobile if theme selector is too intrusive */
+/* Block Selector */
+#block-selector {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background-color: rgba(59, 66, 82, 0.85); padding: 8px; border-radius: 12px;
+    display: flex; gap: 6px; pointer-events: auto; z-index: 10;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.block-option {
+    padding: 10px 14px; background-color: #4C566A; color: #ECEFF4;
+    border-radius: 8px; cursor: pointer; border: 2px solid transparent; user-select: none;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+.block-option:hover { background-color: #5E81AC; }
+.block-option.active {
+    border-color: #88C0D0; background-color: #5E81AC;
+    box-shadow: 0 0 8px rgba(136, 192, 208, 0.5);
+}
+/* Mobile Controls */
+#mobile-controls {
+    display: none; position: fixed; bottom: 0; left: 0; width: 100%; height: 160px;
+    pointer-events: auto; z-index: 10;
+}
+#joystick-area {
+    position: absolute; bottom: 25px; left: 25px; width: 110px; height: 110px;
+    background-color: rgba(76, 86, 106, 0.5); border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+}
+#joystick-handle {
+    width: 55px; height: 55px; background-color: rgba(216, 222, 233, 0.6);
+    border-radius: 50%;
+}
+#jump-button, #place-block-button, #remove-block-button {
+    position: absolute; width: 65px; height: 65px; border-radius: 50%;
+    background-color: rgba(76, 86, 106, 0.6); border: 2px solid rgba(216, 222, 233, 0.5);
+    color: #ECEFF4; font-size: 28px; display: flex; justify-content: center; align-items: center;
+    user-select: none; -webkit-tap-highlight-color: transparent;
+}
+#jump-button { right: 100px; bottom: 85px; }
+#place-block-button { right: 180px; bottom: 45px; }
+#remove-block-button { right: 30px; bottom: 45px; }
+/* Chat System */
+#chat-widget {
+    position: absolute; bottom: 20px; left: 20px;
+    background-color: rgba(59, 66, 82, 0.9); border-radius: 10px;
+    color: #ECEFF4; pointer-events: auto; max-width: 320px; z-index: 10;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+#chat-toggle { padding: 12px; cursor: pointer; user-select: none; font-weight: 500; }
+#chat-window { padding: 12px; border-top: 1px solid #4C566A; }
+#chat-messages {
+    height: 160px; overflow-y: auto; margin-bottom: 10px; font-size: 0.95em;
+    word-break: break-word; scrollbar-width: thin; scrollbar-color: #5E81AC #434C5E;
+}
+#chat-messages::-webkit-scrollbar { width: 8px; }
+#chat-messages::-webkit-scrollbar-track { background: #434C5E; border-radius: 4px;}
+#chat-messages::-webkit-scrollbar-thumb { background-color: #5E81AC; border-radius: 4px; }
+#chat-messages p { margin: 3px 0; line-height: 1.4; }
+#chat-input-area { display: flex; align-items: center; }
+#chat-input {
+    flex-grow: 1; padding: 9px; border: 1px solid #4C566A;
+    background-color: #434C5E; color: #ECEFF4; border-radius: 6px; margin-right: 6px;
+}
+#chat-input::placeholder { color: #A3B1C2; }
+#send-chat-button, #emoji-picker-button {
+    padding: 9px 12px; background-color: #88C0D0; border: none; color: #2E3440;
+    border-radius: 6px; cursor: pointer; user-select: none; font-weight: 500;
+}
+#emoji-picker-button { background-color: #EBCB8B; }
+#emoji-palette {
+    position: absolute; bottom: calc(100% + 8px); left: 0;
+    background-color: rgba(46, 52, 64, 0.95); border: 1px solid #4C566A;
+    padding: 10px; border-radius: 8px; display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)); gap: 5px;
+    width: 220px; box-shadow: 0 3px 15px rgba(0,0,0,0.3);
+}
+#emoji-palette span { cursor: pointer; padding: 6px; font-size: 1.3em; text-align: center; border-radius: 4px; }
+#emoji-palette span:hover { background-color: #5E81AC; }
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    #theme-selector-widget {
-        top: 10px;
-        padding: 6px;
-        gap: 6px;
-    }
-    .theme-button {
-        padding: 6px 10px;
-        font-size: 0.8em;
-    }
-    #crosshair { /* Hide crosshair if theme selector might overlap and cause confusion on taps */
-        /* display: none; */ /* Optional: consider if it becomes an issue */
-    }
+    #theme-selector-widget { top: 10px; padding: 6px; gap: 6px; }
+    .theme-button { padding: 6px 10px; font-size: 0.8em; }
+    #block-selector { bottom: 180px; flex-wrap: wrap; justify-content: center; width: 90%; }
+    .block-option { padding: 9px 11px; font-size: 0.9em; }
+    #chat-widget { bottom: 180px; left: 10px; max-width: calc(100% - 20px); }
+    #mobile-controls { display: block; }
 }
