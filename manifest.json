@@ -1,12 +1,24 @@
 {
-  "name": "KiddoVerse",
-  "short_name": "KiddoVerse",
-  "start_url": "/kiddoverse-web-edition/index.html",
-  "display": "standalone",
-  "background_color": "#87CEEB",
-  "theme_color": "#ffffff",
-  "icons": [
-    { "src": "https://cdn-icons-png.flaticon.com/512/847/847969.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "https://cdn-icons-png.flaticon.com/512/847/847969.png", "sizes": "512x512", "type": "image/png" }
-  ]
+    "name": "KiddoVerse Web Edition",
+    "short_name": "KiddoVerse",
+    "description": "A creative and educational 3D sandbox game for kids with modern block visuals.",
+    "start_url": "/index.html", 
+    "display": "fullscreen",
+    "background_color": "#2E3440", 
+    "theme_color": "#5E81AC", 
+    "orientation": "landscape",
+    "icons": [
+        {
+            "src": "assets/images/logo192.png", 
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/images/logo512.png", 
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
 }
