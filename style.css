@@ -1,90 +1,59 @@
-/* style.css */
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+/* ... (all previous styles from "Modern Lego Visual" phase remain) ... */
+
+/* NEW STYLES FOR THEME SELECTOR */
+#theme-selector-widget {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(59, 66, 82, 0.85); /* Nord dark blue, semi-transparent */
+    padding: 8px;
+    border-radius: 10px;
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #eef1f5; /* A slightly more engaging light background */
-    color: #333;
-    overflow-x: hidden;
+    gap: 10px;
+    z-index: 20; /* Above other UI */
+    pointer-events: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-header {
-    text-align: center;
-    padding: 15px 0; /* Slightly more padding */
-    background-color: #ffffff;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    z-index: 100; /* High z-index */
-}
-
-header h1 {
-    margin: 0;
-    color: #2c3e50; /* Dark blue-grey */
-    font-size: 1.8em;
-}
-
-header p {
-    margin: 5px 0 0 0;
-    color: #7f8c8d; /* Muted grey */
-    font-size: 0.9em;
-}
-
-main {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px; /* Padding around canvas container */
-    overflow: hidden; /* Critical for preventing canvas overflow issues */
-}
-
-#gameCanvas {
-    display: block;
-    /* Width and height will be set by JavaScript */
-    border: 3px solid #4a90e2; /* A friendly blue border */
-    border-radius: 8px; /* Rounded corners for the canvas */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    /* Initial background for canvas element, Three.js will paint over this */
-    background-color: #d0d9e0;
-}
-
-.controls-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #34495e; /* Dark slate blue */
-    padding: 15px 0; /* More vertical padding */
-    box-sizing: border-box;
-    text-align: center;
-    z-index: 100; /* High z-index */
-    box-shadow: 0 -3px 8px rgba(0,0,0,0.2);
-    display: flex; /* For better button alignment */
-    justify-content: center;
-    align-items: center;
-    gap: 10px; /* Space between buttons */
-}
-
-.controls-bar button {
-    padding: 10px 18px; /* Balanced padding */
-    background-color: #5dade2; /* Lighter, friendly blue */
-    color: white;
+.theme-button {
+    padding: 8px 15px;
+    background-color: #4C566A; /* Nord darker grey-blue */
+    color: #ECEFF4; /* Nord light text */
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 1em; /* Slightly larger font for buttons */
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
     font-weight: 500;
-    transition: background-color 0.2s ease, transform 0.1s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    font-size: 0.9em;
+    transition: background-color 0.2s, transform 0.1s;
+    border: 2px solid transparent;
 }
 
-.controls-bar button:hover {
-    background-color: #4a90e2; /* Darker blue on hover */
-    transform: translateY(-1px); /* Slight lift on hover */
+.theme-button:hover {
+    background-color: #5E81AC; /* Nord lighter blue */
 }
 
-.controls-bar button:active {
-    background-color: #3c7cb8; /* Even darker when clicked */
-    transform: translateY(0px); /* Press down effect */
+.theme-button.active-theme {
+    background-color: #88C0D0; /* Nord bright accent blue */
+    color: #2E3440; /* Nord darkest blue for text */
+    border-color: #D8DEE9; /* Nord light grey border */
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(136, 192, 208, 0.4);
+}
+
+/* Adjustments for mobile if theme selector is too intrusive */
+@media (max-width: 768px) {
+    #theme-selector-widget {
+        top: 10px;
+        padding: 6px;
+        gap: 6px;
+    }
+    .theme-button {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+    #crosshair { /* Hide crosshair if theme selector might overlap and cause confusion on taps */
+        /* display: none; */ /* Optional: consider if it becomes an issue */
+    }
 }
